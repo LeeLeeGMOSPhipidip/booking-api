@@ -1,19 +1,36 @@
 package com.lee.booking.bookin_api.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.time.OffsetDateTime;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class BookAppointmentRequest {
 
     @NotNull
-    private Long serviceId;
+    private LocalDate date;
 
     @NotNull
-    private OffsetDateTime startTime;
+    private LocalTime time;
 
-    public Long getServiceId() { return serviceId; }
-    public OffsetDateTime getStartTime() { return startTime; }
+    @NotBlank
+    private String service;
 
-    public void setServiceId(Long serviceId) { this.serviceId = serviceId; }
-    public void setStartTime(OffsetDateTime startTime) { this.startTime = startTime; }
+    @NotBlank
+    private String customerName;
+
+    private String notes;
+
+    public LocalDate getDate() { return date; }
+    public LocalTime getTime() { return time; }
+    public String getService() { return service; }
+    public String getCustomerName() { return customerName; }
+    public String getNotes() { return notes; }
+
+    public void setDate(LocalDate date) { this.date = date; }
+    public void setTime(LocalTime time) { this.time = time; }
+    public void setService(String service) { this.service = service; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
+    public void setNotes(String notes) { this.notes = notes; }
 }
