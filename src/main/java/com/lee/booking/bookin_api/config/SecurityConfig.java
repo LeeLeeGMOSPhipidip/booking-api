@@ -19,7 +19,7 @@ public class SecurityConfig {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
-   @Bean
+ @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http
             .csrf(csrf -> csrf.disable())
@@ -27,11 +27,9 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(
                             "/auth/**",
-                            "/services/**",
                             "/swagger-ui/**",
                             "/swagger-ui.html",
-                            "/v3/api-docs/**",
-                            "/swagger-resources/**"
+                            "/v3/api-docs/**"
                     ).permitAll()
                     .anyRequest().authenticated()
             )
