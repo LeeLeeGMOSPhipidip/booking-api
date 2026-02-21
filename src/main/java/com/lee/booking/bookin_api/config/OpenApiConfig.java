@@ -9,11 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(
-                title = "Booking API",
-                version = "v1",
-                description = "API for managing services and bookings"
-        ),
+        info = @Info(title = "Booking API", version = "v1"),
         security = { @SecurityRequirement(name = "bearerAuth") }
 )
 @SecurityScheme(
@@ -23,5 +19,4 @@ import org.springframework.context.annotation.Configuration;
         bearerFormat = "JWT",
         description = "Paste the JWT token only (no 'Bearer ' prefix)."
 )
-public class OpenApiConfig {
-}
+public class OpenApiConfig {}
