@@ -13,24 +13,24 @@ public class AppointmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // store the customer identity (email) for now; later we’ll link to User table
-    @Column(nullable = false)
+    @Column(name = "customer_email", nullable = false)
     private String customerEmail;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "service_id")
+    @JoinColumn(name = "service_id", nullable = false)
     private ServiceEntity service;
 
-    @Column(nullable = false)
+    @Column(name = "start_time", nullable = false)
     private OffsetDateTime startTime;
 
-    @Column(nullable = false)
+    @Column(name = "end_time", nullable = false)
     private OffsetDateTime endTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status = Status.BOOKED;
 
+    // getters/setters...
     public AppointmentEntity() {}
 
     public Long getId() { return id; }

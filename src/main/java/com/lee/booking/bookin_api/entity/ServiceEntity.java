@@ -13,7 +13,7 @@ public class ServiceEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "duration_minutes", nullable = false)
     private Integer durationMinutes;
 
     public ServiceEntity() {}

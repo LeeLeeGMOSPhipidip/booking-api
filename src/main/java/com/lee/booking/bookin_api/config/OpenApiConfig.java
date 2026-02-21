@@ -5,19 +5,22 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @OpenAPIDefinition(
     info = @Info(title = "Booking API", version = "v1"),
     servers = {
         @Server(url = "http://localhost:8080", description = "Local"),
         @Server(url = "https://booking-api-production-ba28.up.railway.app", description = "Production")
-    }
+    },
+    security = { @SecurityRequirement(name = "bearerAuth") }
 )
+
 @SecurityScheme(
     name = "bearerAuth",
     type = SecuritySchemeType.HTTP,
     scheme = "bearer",
     bearerFormat = "JWT",
-    description = "Enter the JWT token as: Bearer <token>"
+    description = "Paste the JWT token only (no 'Bearer ' prefix)."
 )
 public class OpenApiConfig {}

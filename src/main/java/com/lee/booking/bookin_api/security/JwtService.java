@@ -1,8 +1,13 @@
 package com.lee.booking.bookin_api.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -38,10 +43,21 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * Safely extract subject (username/email) from token.
+     * Returns null if token is invalid or malformed.
+     */
     public String extractSubject(String token) {
-        return parseClaims(token).getBody().getSubject();
+        try {
+            return parseClaims(token).getBody().getSubject();
+        } catch (JwtException | IllegalArgumentException ex) {
+            return null;
+        }
     }
 
+    /**
+     * Basic structural & signature validation.
+     */
     public boolean isTokenValid(String token) {
         try {
             parseClaims(token);
@@ -51,7 +67,29 @@ public class JwtService {
         }
     }
 
+    /**
+     * Full validation: signature, expiry, and subject matches user.
+     */
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        try {
+            Jws<Claims> claims = parseClaims(token);
+
+            String subject = claims.getBody().getSubject();
+            Date expiration = claims.getBody().getExpiration();
+
+            return subject != null
+                    && subject.equals(userDetails.getUsername())
+                    && expiration != null
+                    && expiration.after(new Date());
+        } catch (JwtException | IllegalArgumentException ex) {
+            return false;
+        }
+    }
+
     private Jws<Claims> parseClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
     }
 }
