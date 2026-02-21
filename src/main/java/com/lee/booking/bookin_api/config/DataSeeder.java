@@ -10,13 +10,17 @@ import org.springframework.context.annotation.Configuration;
 public class DataSeeder {
 
     @Bean
-    CommandLineRunner seedServices(ServiceRepository repo) {
-        return args -> {
-            if (repo.count() == 0) {
-                repo.save(new ServiceEntity("Consultation", 30));
-                repo.save(new ServiceEntity("Follow-up", 15));
-                repo.save(new ServiceEntity("Extended Session", 60));
-            }
-        };
+CommandLineRunner seedServices(ServiceRepository repo) {
+    return args -> {
+        seedIfMissing(repo, "Consultation", 30);
+        seedIfMissing(repo, "Follow-up", 15);
+        seedIfMissing(repo, "Extended Session", 60);
+    };
+}
+
+private void seedIfMissing(ServiceRepository repo, String name, int duration) {
+    if (!repo.existsByName(name)) {
+        repo.save(new ServiceEntity(name, duration));
     }
+}
 }
