@@ -3,24 +3,25 @@ package com.lee.booking.bookin_api.config;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 @OpenAPIDefinition(
-    info = @Info(title = "Booking API", version = "v1"),
-    servers = {
-        @Server(url = "http://localhost:8080", description = "Local"),
-        @Server(url = "https://booking-api-production-ba28.up.railway.app", description = "Production")
-    },
-    security = { @SecurityRequirement(name = "bearerAuth") }
+        info = @Info(
+                title = "Booking API",
+                version = "v1",
+                description = "API for managing services and bookings"
+        ),
+        security = { @SecurityRequirement(name = "bearerAuth") }
 )
-
 @SecurityScheme(
-    name = "bearerAuth",
-    type = SecuritySchemeType.HTTP,
-    scheme = "bearer",
-    bearerFormat = "JWT",
-    description = "Paste the JWT token only (no 'Bearer ' prefix)."
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT",
+        description = "Paste the JWT token only (no 'Bearer ' prefix)."
 )
-public class OpenApiConfig {}
+public class OpenApiConfig {
+}
